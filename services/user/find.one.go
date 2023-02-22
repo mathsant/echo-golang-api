@@ -20,7 +20,14 @@ func FindOneUser(id string) (*models.User, error) {
 
 	objId, _ := primitive.ObjectIDFromHex(id)
 
-	err := UserCollection.FindOne(ctx, bson.M{"id": objId}).Decode(&user)
+	filter := bson.M{
+		"id": objId,
+		"deleted_at": bson.M{
+			"$exists": false,
+		},
+	}
+
+	err := UserCollection.FindOne(ctx, filter).Decode(&user)
 
 	if err != nil {
 		return nil, err

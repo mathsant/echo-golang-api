@@ -14,13 +14,32 @@ func DeleteUser(id string) error {
 
 	objId, _ := primitive.ObjectIDFromHex(id)
 
-	result, err := UserCollection.DeleteOne(ctx, bson.M{"id": objId})
+	filter := bson.M{
+		"id": objId,
+		"deleted_at": bson.M{
+			"$exists": false,
+		},
+	}
+
+	updater := bson.D{
+		primitive.E{
+			Key: "$set",
+			Value: bson.D{
+				primitive.E{
+					Key:   "deleted_at",
+					Value: time.Now(),
+				},
+			},
+		},
+	}
+
+	result, err := UserCollection.UpdateOne(ctx, filter, updater)
 
 	if err != nil {
 		return err
 	}
 
-	if result.DeletedCount < 1 {
+	if result.ModifiedCount < 1 {
 		return errors.New("user with this ID not exists")
 	}
 

@@ -13,7 +13,13 @@ func FindAllUsers() ([]models.User, error) {
 
 	var users []models.User
 
-	results, err := UserCollection.Find(ctx, bson.M{})
+	filter := bson.M{
+		"deleted_at": bson.M{
+			"$exists": false,
+		},
+	}
+
+	results, err := UserCollection.Find(ctx, filter)
 
 	if err != nil {
 		return nil, err
