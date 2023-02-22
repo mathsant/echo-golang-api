@@ -12,6 +12,7 @@ func main() {
 	configs.ConnectDB()
 
 	routes.UserRoute(e)
+	routes.TransactionRoute(e)
 
 	e.Logger.Fatal(e.Start(":8000"))
 }
