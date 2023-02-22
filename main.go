@@ -7,12 +7,11 @@ import (
 )
 
 func main() {
-	e := echo.New()
+	app := echo.New()
 
 	configs.ConnectDB()
 
-	routes.UserRoute(e)
-	routes.TransactionRoute(e)
+	routes.SetupRoutes(app)
 
-	e.Logger.Fatal(e.Start(":8000"))
+	app.Logger.Fatal(app.Start(":8000"))
 }
