@@ -1,7 +1,7 @@
 package routes
 
 import (
-	userRoutes "echo-mongo-api/routes/user.route"
+	userRoutes "echo-mongo-api/routes/user"
 	"github.com/labstack/echo/v4"
 )
 
