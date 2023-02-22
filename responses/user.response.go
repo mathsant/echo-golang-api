@@ -7,3 +7,8 @@ type UserResponse struct {
 	Message string    `json:"message"`
 	Data    *echo.Map `json:"data"`
 }
+
+type ErrorResponse struct {
+	Status  int    `json:"status"`
+	Message string `json:"message"`
+}

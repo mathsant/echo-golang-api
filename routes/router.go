@@ -9,4 +9,5 @@ func SetupRoutes(app *echo.Echo) {
 	api := app.Group("/api")
 
 	userRoutes.SetupUserRoute(api)
+	TransactionRoute(api)
 }

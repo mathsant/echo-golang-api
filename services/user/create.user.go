@@ -23,6 +23,8 @@ func CreateUser(user models.User) (*mongo.InsertOneResult, error) {
 		ID:       primitive.NewObjectID(),
 		Name:     user.Name,
 		Title:    user.Title,
+		Email:    user.Email,
+		Admin:    false,
 		Location: user.Location,
 	}
 
