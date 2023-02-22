@@ -7,4 +7,5 @@ import (
 
 func TransactionRoute(e *echo.Group) {
 	e.POST("/transaction", controllers.CreateTransactionByUser)
+	e.GET("/transaction/user", controllers.GetAllTransactionsByUser)
 }

@@ -31,6 +31,7 @@ func Login(c echo.Context) error {
 	claims := jwt.MapClaims{}
 	claims["name"] = userFounded.Name
 	claims["email"] = userFounded.Email
+	claims["userId"] = userFounded.ID
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	t, errToken := utils.GenerateToken(&claims)
