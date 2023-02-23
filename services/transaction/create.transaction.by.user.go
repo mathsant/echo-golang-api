@@ -36,10 +36,11 @@ func CreateTransactionByUser(transactionParam models.Transaction, userId string)
 	}
 
 	newTransaction := models.Transaction{
-		Value:     transactionParam.Value,
-		Category:  transactionParam.Category,
-		UserId:    userId,
-		CreatedAt: time.Now(),
+		Value:           transactionParam.Value,
+		Category:        transactionParam.Category,
+		UserId:          userId,
+		DateTransaction: time.Now(),
+		CreatedAt:       time.Now(),
 	}
 
 	userUpdatedWithNewBudget := bson.M{"budget": utils.ToFixed(user.Budget-transactionParam.Value, 2)}

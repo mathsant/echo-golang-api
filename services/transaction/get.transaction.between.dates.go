@@ -8,19 +8,24 @@ import (
 	"time"
 )
 
-func GetTransactionsByUser(userId string, limit, page int) (*[]models.Transaction, error) {
+func GetTransactionsByDate(userId string) (*[]models.Transaction, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+
 	var transactions []models.Transaction
 
+	initialHourOfToday := utils.TruncateToDay(time.Now())
+	lastHourOfToday := utils.TruncateToLastHourOfDay(time.Now())
+
 	filter := bson.M{
-		"userid": userId,
+		"userid":          userId,
+		"datetransaction": bson.M{"$gte": initialHourOfToday, "$lte": lastHourOfToday},
 		"deleted_at": bson.M{
 			"$exists": false,
 		},
 	}
 
-	results, err := TransactionCollection.Find(ctx, filter, utils.NewMongoPaginate(limit, page).GetPaginatedOpts())
+	results, err := TransactionCollection.Find(ctx, filter)
 
 	if err != nil {
 		return nil, err
@@ -37,4 +42,5 @@ func GetTransactionsByUser(userId string, limit, page int) (*[]models.Transactio
 	}
 
 	return &transactions, nil
+
 }
